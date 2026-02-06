@@ -1,12 +1,16 @@
-import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-import type {TanStackProviderProps} from "@/components/TanStackProvider/TanStackProvider"
+import ClientLayout from "@/components/ClientLayout";
 
-export default function RootLayout({ children }:TanStackProviderProps) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
-        <TanStackProvider>{children}</TanStackProvider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
 }
+

@@ -1,4 +1,3 @@
-
 export default function HomePage() {
   return (
     <main>
@@ -7,3 +6,4 @@ export default function HomePage() {
     </main>
   );
 }
+

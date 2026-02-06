@@ -1,24 +1,23 @@
-"use client"
 import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { fetchNoteById } from "@/app/lib/api";
 import { notFound } from "next/navigation";
+import { fetchNoteById } from "@/lib/api";
 import NoteDetailsClient from "./NoteDetails.client";
 import type { Note } from "@/types/note";
 
-type  NotePageProps = {
+type NotePageProps = {
   params: { id: string };
 };
 
-export default async function NotePage({ params }: NotePageProps ) {
+export default async function NotePage({ params }: NotePageProps) {
   const queryClient = new QueryClient();
 
-  try{
-      await queryClient.prefetchQuery({
-    queryKey: ["note", params.id],
-    queryFn: () => fetchNoteById(params.id),
-  });
-  }catch(error){
-  notFound();
+  try {
+    await queryClient.prefetchQuery<Note>({
+      queryKey: ["note", params.id],
+      queryFn: () => fetchNoteById(params.id),
+    });
+  } catch {
+    notFound();
   }
 
   return (
@@ -27,5 +26,6 @@ export default async function NotePage({ params }: NotePageProps ) {
     </HydrationBoundary>
   );
 }
+
 
 
