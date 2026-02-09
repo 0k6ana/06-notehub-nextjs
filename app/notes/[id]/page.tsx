@@ -8,6 +8,7 @@ export default async function NoteDetailsPage({
 }: {
   params: { id: string } | Promise<{ id: string }>;
 }) {
+
   const resolvedParams = "then" in params ? await params : params;
 
   const queryClient = new QueryClient();

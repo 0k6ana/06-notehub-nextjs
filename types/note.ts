@@ -14,3 +14,7 @@ export interface Note {
   updatedAt: string;
 }
 
+export interface NotesResponse {
+  notes: Note[];
+  totalPages: number;
+}
