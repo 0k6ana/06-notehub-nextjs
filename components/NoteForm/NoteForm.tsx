@@ -12,7 +12,7 @@ interface FormValues {
   tag: Tag;
 }
 
-interface NoteFormProps {
+export interface NoteFormProps {
   onCancel: () => void;
 }
 

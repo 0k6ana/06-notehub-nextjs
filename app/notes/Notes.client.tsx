@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useQuery, keepPreviousData} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Modal from "@/components/Modal/Modal";
+import NoteForm from "@/components/NoteForm/NoteForm";
 import type { NotesResponse } from "@/types/note";
 
 function useDebounce<T>(value: T, delay: number) {
@@ -35,15 +36,17 @@ export default function NotesClient() {
         perPage: 12,
         search: debouncedSearch,
       }),
-    placeholderData:keepPreviousData,
+    staleTime: 5000, 
   });
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
   const handleSearchChange = (value: string) => {
     setPage(1); 
     setSearch(value);
   };
+
   const handlePageChange = (newPage: number) => setPage(newPage);
 
   if (isLoading) return <p>Loading, please wait...</p>;
@@ -52,19 +55,27 @@ export default function NotesClient() {
   return (
     <div>
       <SearchBox value={search} onChange={handleSearchChange} />
-      <NoteList notes={data.notes} />
-      <Pagination
-        pageCount={data.totalPages}
-        currentPage={page}
-        onPageChange={handlePageChange}
-      />
-      <button onClick={handleOpenModal}>Open Modal</button>
+
+      {}
+      {data.notes.length > 0 && <NoteList notes={data.notes} />}
+
+      {}
+      {data.totalPages > 1 && (
+        <Pagination
+          pageCount={data.totalPages}
+          currentPage={page}
+          onPageChange={handlePageChange}
+        />
+      )}
+
+      <button onClick={handleOpenModal}>Add Note</button>
+
+      { }
       {isModalOpen && (
         <Modal onClose={handleCloseModal}>
-          <h2>Modal Content</h2>
-          <p>You can put anything here!</p>
-          <button onClick={handleCloseModal}>Close</button>
+          <NoteForm onCancel={handleCloseModal} />
         </Modal>
+
       )}
     </div>
   );
