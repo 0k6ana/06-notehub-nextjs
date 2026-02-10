@@ -12,3 +12,6 @@ export default function TanStackProvider({
 
   return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }
+
+
+
