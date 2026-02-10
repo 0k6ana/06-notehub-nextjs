@@ -49,3 +49,7 @@ export const deleteNote = async (id: string): Promise<Note> => {
   const { data } = await api.delete(`/notes/${id}`);
   return data;
 };
+export interface NotesResponse {
+  notes: Note[];
+  totalPages: number;
+}
